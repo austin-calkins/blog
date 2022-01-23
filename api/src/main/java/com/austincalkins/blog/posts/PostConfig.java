@@ -7,7 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import java.time.LocalDate;
 import java.util.List;
 
-import static java.time.Month.*;
+import static java.time.Month.NOVEMBER;
+import static java.time.Month.OCTOBER;
 
 // TODO figure out how to move this out of code for testing and seeding
 @Configuration
@@ -28,7 +29,7 @@ public class PostConfig {
                     LocalDate.of(2020, NOVEMBER, 5)
             );
 
-            repository.saveAll(List.of(firstPost, secondPost));
+//            repository.saveAll(List.of(firstPost, secondPost));
         };
     }
 }

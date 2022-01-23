@@ -1,6 +1,7 @@
 package com.austincalkins.blog.posts;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping
-    public List<Post> fetchPosts() {
-       return this.postService.fetchPosts(0);
+    @GetMapping(path = "{pageNumber}")
+    public List<Post> fetchPosts(@PathVariable("pageNumber") int pageNumber) {
+       return this.postService.fetchPosts(pageNumber);
     }
 
     @PostMapping
@@ -32,8 +33,8 @@ public class PostController {
         this.postService.updatePost(post);
     }
 
-    @DeleteMapping
-    public void deletePost(long postId) {
+    @DeleteMapping(path = "{postId}")
+    public void deletePost(@PathVariable("postId") long postId) {
         this.postService.deletePost(postId);
     }
 

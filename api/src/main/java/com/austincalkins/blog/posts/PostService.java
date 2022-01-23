@@ -3,6 +3,10 @@ package com.austincalkins.blog.posts;
 import com.austincalkins.blog.posts.exceptions.DuplicatePostException;
 import com.austincalkins.blog.posts.exceptions.PostNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,13 +18,19 @@ public class PostService {
 
     private final PostRepository postRepository;
 
+    private static final int PAGE_SIZE = 10;
+
     @Autowired
     public PostService(PostRepository postRepository) {
         this.postRepository = postRepository;
     }
 
     public List<Post> fetchPosts(int pageNumber) {
-        return this.postRepository.findAll();
+        Pageable sortedByCreatedDate =
+                PageRequest.of(pageNumber, PAGE_SIZE, Sort.by("createdDate").descending());
+        Page<Post> posts = this.postRepository.findAll(sortedByCreatedDate);
+
+        return posts.get().toList();
     }
 
     public Post createPost(Post post) {

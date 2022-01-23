@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table
+@Table(name = "post")
 public class Post {
 
     @SequenceGenerator(

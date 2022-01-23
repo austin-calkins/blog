@@ -53,7 +53,20 @@ public class PostServiceIntegrationTest {
 
     @Test
     public void fetchPosts_willPageResults() {
+        List<Post> posts = this.postService.fetchPosts(0);
 
+        assertNotNull(posts);
+        assertEquals(posts.size(), 10);;
+
+        Post post = posts.get(0);
+        assertEquals(post.getTitle(), "Post - 15");
+
+        posts = this.postService.fetchPosts(1);
+
+        assertEquals(posts.size(), 5);
+
+        post = posts.get(0);
+        assertEquals(post.getTitle(), "Post - 5");
     }
 
     private List<Post> setupTestSeedData() {
